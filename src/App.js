@@ -1,17 +1,14 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import { Sync } from './sync/Sync';
+
+import { Sync } from './Sync/Sync';
+import { Navbar } from './Navbar/Navbar';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Upload catalog:
-          <Sync></Sync>
-        </p>
-      </header>
+        <Navbar></Navbar>
+        <Sync></Sync>
     </div>
   );
 }
