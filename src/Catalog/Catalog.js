@@ -36,7 +36,7 @@ export function Catalog() {
       >
         <Column flexGrow={1} align="left" fixed>
           <HeaderCell>Tilda UID</HeaderCell>
-          <Cell dataKey="Tilda UID" sortable={true} />
+          <Cell dataKey="Tilda UID" sortable/>
         </Column>
         <Column flexGrow={1}>
           <HeaderCell>Picture</HeaderCell>
@@ -46,15 +46,15 @@ export function Catalog() {
             )}
           </Cell>
         </Column>
-        <Column dataKey="Title" sortable={true} flexGrow={3} align="left">
+        <Column dataKey="Title" sortable flexGrow={3} align="left">
           <HeaderCell>Title</HeaderCell>
           <Cell dataKey="Title" />
         </Column>
-        <Column dataKey="Price" sortable={true} align="right">
+        <Column dataKey="Price" sortable align="right">
           <HeaderCell>Price</HeaderCell>
           <Cell>{rowData => `${(+rowData.Price).toFixed(0)} ₴`}</Cell>
         </Column>
-        <Column dataKey="Quantity" sortable={true} align="left" fixed>
+        <Column dataKey="Quantity" sortable align="left" fixed>
           <HeaderCell>Quantity</HeaderCell>
           <Cell dataKey="Quantity" />
         </Column>
