@@ -14,7 +14,7 @@
     "rsuite": "^4.8.1"
   },
   "scripts": {
-    "start": "http-server build",
+    "start": "npm run build && http-server ./build",
     "serve": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
