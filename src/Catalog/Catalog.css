@@ -1,14 +1,17 @@
-.Catalog{
-    display: flex;
-    flex-direction: column;
+.Catalog {
+  display: flex;
+  flex-direction: column;
 }
 
 .sub-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 0.5em 2em;
 }
 
 .catalog__divider {
-  margin-top: 0px !important;
+  margin-top: 0 !important;
 }
 
 .Sync {

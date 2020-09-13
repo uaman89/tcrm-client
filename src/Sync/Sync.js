@@ -40,10 +40,10 @@ export function Sync({ onUploadComplete }) {
           accept: '.csv',
         })}
       />
-      <p>{isProcessing
+      {isProcessing
         ? <div>p r <Icon icon="cog" size="1x" spin /> c e s  s i n g ...</div>
         : "Drag 'n' drop CSV file here, or click to select a file"
-      }</p>
+      }
     </div>
   );
 }

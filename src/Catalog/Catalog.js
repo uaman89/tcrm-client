@@ -1,17 +1,27 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
 import axios from 'axios';
+import ButtonToolbar from 'rsuite/es/ButtonToolbar';
 import Button from 'rsuite/es/Button';
 import Icon from 'rsuite/es/Icon';
 import Table from 'rsuite/es/Table';
 import Divider from 'rsuite/es/Divider';
 
 import { API_HOST } from '../constants';
-import './Catalog.css';
 import { Sync } from '../Sync/Sync';
+import './Catalog.css';
+
+export function downloadFile(blob, fileName) {
+  const link = document.createElement('a');
+  link.href = window.URL.createObjectURL(blob);
+  link.download = fileName;
+  link.click();
+  link.remove();
+}
 
 export const Catalog = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [isExporting, setIsExporting] = useState(false);
   const [catalog, setCatalog] = useState([]);
   const { Column, HeaderCell, Cell } = Table;
 
@@ -40,13 +50,48 @@ export const Catalog = () => {
     load();
   };
 
+  const exportXlsx = () => {
+    setIsExporting(true);
+    loadXlsx();
+  };
+
+  const loadXlsx = useCallback(
+    () => {
+      axios
+        .get(`${API_HOST}/converter`, {
+          responseType: 'blob',
+          timeout: 30000,
+        })
+        .catch(() => {
+          alert('Expoting Catalog is failed.');
+          return { data: catalog };
+        })
+        .then(response => {
+          setIsLoading(false);
+          const blob = response.data;
+          const fileName = `mp-catalog_${new Date()
+            .toISOString()
+            .substr(2, 14)
+            .replace(/:/g,'')
+            }.xlsx`;
+          downloadFile(blob, fileName);
+        });
+    },
+    [isExporting]
+  );
+
   return (
     <div className="Catalog">
       <div className="sub-header">
         Catalog
-        <Button onClick={() => reloadCatalog()}>
-          <Icon icon="reload" /> Reload
-        </Button>
+        <ButtonToolbar>
+          <Button onClick={() => reloadCatalog()}>
+            <Icon icon="reload" /> Reload
+          </Button>
+          <Button onClick={() => exportXlsx()}>
+            <Icon icon="file-download" /> Get KeepinCRM XLSX
+          </Button>
+        </ButtonToolbar>
       </div>
       <Divider className="catalog__divider">
         {isLoading ? ' is loading...' : `${catalog.length} items`}
@@ -54,7 +99,7 @@ export const Catalog = () => {
       <Table
         data={catalog}
         virtualized
-        height={700}
+        height={800}
         // autoHeight
         loading={isLoading}
         onRowClick={data => {

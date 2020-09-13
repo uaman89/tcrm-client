@@ -1,5 +1,4 @@
 import React from 'react';
-import {AppNavbar} from './Navbar/AppNavbar';
 import {Catalog} from './Catalog/Catalog';
 import './App.css';
 
@@ -8,7 +7,6 @@ function App() {
 
   return (
     <div className="App">
-      <AppNavbar />
       <Catalog {...catalogProps} />
     </div>
   );

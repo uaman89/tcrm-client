@@ -7,5 +7,8 @@
   font-size: 1.5rem;
   user-select: none;
   cursor: default;
+  display: grid;
+  align-items: center;
   text-align: center;
+  max-height: 100px;
 }
