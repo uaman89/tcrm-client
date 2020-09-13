@@ -1,34 +1,60 @@
-import React, { useState, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+
 import axios from 'axios';
+import Button from 'rsuite/es/Button';
+import Icon from 'rsuite/es/Icon';
+import Table from 'rsuite/es/Table';
+import Divider from 'rsuite/es/Divider';
+
 import { API_HOST } from '../constants';
-import { Table } from 'rsuite';
+import './Catalog.css';
 
 export function Catalog() {
   const [isLoading, setIsLoading] = useState(true);
   const [catalog, setCatalog] = useState([]);
   const { Column, HeaderCell, Cell } = Table;
 
-  useEffect(
+  const load = useCallback(
     () => {
-      if (!catalog.length) {
-        axios.get(`${API_HOST}/catalog`).then(response => {
+      axios
+        .get(`${API_HOST}/catalog`)
+        .catch(() => {
+          alert('Loading Catalog is failed.');
+          return { data: catalog };
+        })
+        .then(response => {
           setCatalog(response.data);
           setIsLoading(false);
         });
-      }
     },
-    [catalog]
+    [isLoading]
   );
+
+  useEffect(() => {
+    load();
+  }, []);
+
+  const onReload = () => {
+    setIsLoading(true);
+    load();
+  };
 
   return (
     <div className="Catalog">
-      Catalog {isLoading ? ' is loading...' : `(${catalog.length} items) :`}
-      <hr />
+      <div className="sub-header">
+      Catalog
+      <Button onClick={() => onReload()}>
+        <Icon icon="reload" /> Reload
+      </Button>
+      </div>
+      <Divider className='catalog__divider'>
+        {isLoading ? ' is loading...' : `${catalog.length} items`}
+      </Divider>
       <Table
         data={catalog}
         virtualized
         // autoHeight={true}
-          height={750}
+        height={750}
         loading={isLoading}
         onRowClick={data => {
           console.log(data);
@@ -36,13 +62,13 @@ export function Catalog() {
       >
         <Column flexGrow={1} align="left" fixed>
           <HeaderCell>Tilda UID</HeaderCell>
-          <Cell dataKey="Tilda UID" sortable/>
+          <Cell dataKey="Tilda UID" sortable />
         </Column>
         <Column flexGrow={1}>
           <HeaderCell>Picture</HeaderCell>
           <Cell>
             {rowData => (
-              <img src={rowData.Photo } height="45" alt={rowData.Title} />
+              <img src={rowData.Photo} height="45" alt={rowData.Title} />
             )}
           </Cell>
         </Column>
