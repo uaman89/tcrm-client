@@ -1,7 +1,17 @@
+.Catalog{
+    display: flex;
+    flex-direction: column;
+}
+
 .sub-header {
-    padding: .5em 2em;
+  padding: 0.5em 2em;
 }
 
 .catalog__divider {
-    margin-top: 0px !important;
+  margin-top: 0px !important;
+}
+
+.Sync {
+  height: 136px;
+  margin: auto 1rem 1rem;
 }

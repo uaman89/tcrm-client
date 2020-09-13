@@ -1,16 +1,15 @@
 import React from 'react';
+import {AppNavbar} from './Navbar/AppNavbar';
+import {Catalog} from './Catalog/Catalog';
 import './App.css';
 
-import { Sync } from './Sync/Sync';
-import { AppNavbar } from './Navbar/AppNavbar';
-import { Catalog } from './Catalog/Catalog';
-
 function App() {
+  const catalogProps = { loadCatalog: undefined };
+
   return (
     <div className="App">
       <AppNavbar />
-      <Catalog />
-      <Sync />
+      <Catalog {...catalogProps} />
     </div>
   );
 }

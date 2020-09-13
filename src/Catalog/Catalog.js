@@ -8,8 +8,9 @@ import Divider from 'rsuite/es/Divider';
 
 import { API_HOST } from '../constants';
 import './Catalog.css';
+import { Sync } from '../Sync/Sync';
 
-export function Catalog() {
+export const Catalog = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [catalog, setCatalog] = useState([]);
   const { Column, HeaderCell, Cell } = Table;
@@ -34,7 +35,7 @@ export function Catalog() {
     load();
   }, []);
 
-  const onReload = () => {
+  const reloadCatalog = () => {
     setIsLoading(true);
     load();
   };
@@ -42,19 +43,19 @@ export function Catalog() {
   return (
     <div className="Catalog">
       <div className="sub-header">
-      Catalog
-      <Button onClick={() => onReload()}>
-        <Icon icon="reload" /> Reload
-      </Button>
+        Catalog
+        <Button onClick={() => reloadCatalog()}>
+          <Icon icon="reload" /> Reload
+        </Button>
       </div>
-      <Divider className='catalog__divider'>
+      <Divider className="catalog__divider">
         {isLoading ? ' is loading...' : `${catalog.length} items`}
       </Divider>
       <Table
         data={catalog}
         virtualized
-        // autoHeight={true}
-        height={750}
+        height={700}
+        // autoHeight
         loading={isLoading}
         onRowClick={data => {
           console.log(data);
@@ -85,6 +86,7 @@ export function Catalog() {
           <Cell dataKey="Quantity" />
         </Column>
       </Table>
+      <Sync onUploadComplete={reloadCatalog} />
     </div>
   );
-}
+};
