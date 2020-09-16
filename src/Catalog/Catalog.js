@@ -106,29 +106,37 @@ export const Catalog = () => {
           console.log(data);
         }}
       >
-        <Column flexGrow={1} align="left" fixed>
+        <Column flexGrow={1} fixed align="left">
           <HeaderCell>Tilda UID</HeaderCell>
-          <Cell dataKey="Tilda UID" sortable />
+          <Cell dataKey="id" sortable />
+        </Column>
+        <Column flexGrow={1} sortable fixed align="left">
+          <HeaderCell>SKU</HeaderCell>
+          <Cell dataKey="sku" sortable />
         </Column>
         <Column flexGrow={1}>
           <HeaderCell>Picture</HeaderCell>
           <Cell>
             {rowData => (
-              <img src={rowData.Photo} height="45" alt={rowData.Title} />
+              <img src={rowData.photo} height="45" alt={rowData.title} />
             )}
           </Cell>
         </Column>
-        <Column dataKey="Title" sortable flexGrow={3} align="left">
+        <Column dataKey="title" sortable flexGrow={3} align="left">
           <HeaderCell>Title</HeaderCell>
-          <Cell dataKey="Title" />
+          <Cell dataKey="title" />
         </Column>
-        <Column dataKey="Price" sortable align="right">
+        <Column dataKey="size" sortable flexGrow={3} align="left">
+          <HeaderCell>Size</HeaderCell>
+          <Cell dataKey="size" />
+        </Column>
+        <Column dataKey="price" sortable align="right">
           <HeaderCell>Price</HeaderCell>
-          <Cell>{rowData => `${(+rowData.Price).toFixed(0)} ₴`}</Cell>
+          <Cell>{rowData => `${rowData.price} ₴`}</Cell>
         </Column>
         <Column dataKey="Quantity" sortable align="left" fixed>
           <HeaderCell>Quantity</HeaderCell>
-          <Cell dataKey="Quantity" />
+          <Cell dataKey="quantity" />
         </Column>
       </Table>
       <Sync onUploadComplete={reloadCatalog} />
